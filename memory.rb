@@ -1,68 +1,67 @@
 require "pry"
 
-def answer_board
+
+fixed_board = ("A".."L").to_a
+
+def start_board fixed_board
+  print fixed_board[0..3].join
+  puts
+  print fixed_board[4..7].join
+  puts
+  print fixed_board[8..11].join
+  puts
+end
+
+temp_board = ("A".."L").to_a
+
+
+# def number_key
+#   range = (1..6).to_a
+#   number_key = range * 2
+#   number_key.shuffle
+# end
+
+def generate_display_board temp_board
+  print temp_board[0..3].join
+  puts
+  print temp_board[4..7].join
+  puts
+  print temp_board[8..11].join
+  puts
+end
+
+def answer_key fixed_board
   range = (1..6).to_a
-  answer_board = range * 2
-  answer_board.shuffle
+  number_key = (range * 2).shuffle
+  board_map = Hash[fixed_board.zip(number_key)]
 end
 
-board_size = ("A".."L").to_a
+generate_display_board temp_board
 
-def generate_display_board board_size
-  [0,4,8].each do |start|
-    stop = start + 3
-    start.upto stop do |i|
-      print " " + board_size[i] + " "
-    end
-    puts
-  end
-end
+answer_key = answer_key fixed_board
 
-def randomize_answer_board
-end
-
-
-def coord_map
-
-end
-
-puts answer_board
-
-generate_display_board board_size
-
-board_map = Hash[board_size.zip(answer_board)]
-
-binding.pry
-
-# board = generate_board board_size
-
-# numbers = (1..16).to_a
-#
-# board_map = Hash[board_size.zip(numbers)]
-
-
-# until board.all? {|i| i.is_a?(Integer) }
+puts answer_key
 
 puts "Choose a letter: "
 
 choice1 = gets.chomp.upcase
 
-# board_size[board_size.index(choice1)] = board_map[choice1]
+temp_board[temp_board.index(choice1)] = answer_key[choice1]
 
-# puts "Choose another letter: "
-#
-# choice2 = gets.chomp.upcase
+puts "Choose another letter: "
 
-# end
+choice2 = gets.chomp.upcase
 
-# print board ABC,DEF,GHI,JKL
-# have corresponding array with numbers
-# place pairs in array 1,1;2,2;3,3;4,4,5,5,6,6 randomly
-# randomize
-# player selects letter
-# board reprints with revealed number
-# letter/value pair is placed in prevselected hash
-# reprints answer point
-# prompt select another letter
-# if values match, reprint updated board
-# else reprint board
+temp_board[temp_board.index(choice2)] = answer_key[choice2]
+
+
+puts generate_display_board temp_board
+
+if answer_key[choice1] != answer_key[choice2]
+  generate_display_board temp_board
+  puts "No match! Try again."
+  start_board fixed_board
+else
+  start_board = generate_display_board temp_board
+  puts start_board
+end
