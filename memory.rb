@@ -14,7 +14,6 @@ def generate_answer_key start_board
 end
 
 def print_board board
-
   puts
   print board[0..3].join(" ")
   puts
@@ -44,6 +43,10 @@ until matches == 6 || attempts == 0
   if choice1.to_i != 0 || choice2.to_i != 0
 
     puts "Enter two valid LETTERS A-L please."
+
+  elsif correct_answers_board.include?(choice1) == false || correct_answers_board.include?(choice2) == false
+
+    puts "One of those choices is already matched! Guess again."
 
   elsif answer_key[choice1] != answer_key[choice2]
 
