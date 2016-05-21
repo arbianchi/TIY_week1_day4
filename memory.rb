@@ -16,11 +16,12 @@ end
 def print_board board
 
   puts
-  print board[0..3].join
+  print board[0..3].join(" ")
   puts
-  print board[4..7].join
+  print board[4..7].join(" ")
   puts
-  print board[8..11].join
+  print board[8..11].join(" ")
+  puts
   puts
 end
 
