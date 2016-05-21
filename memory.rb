@@ -11,6 +11,7 @@ def generate_answer_key temp_board
 end
 
 def print_board board
+  puts
   print board[0..3].join
   puts
   print board[4..7].join
@@ -19,37 +20,33 @@ def print_board board
   puts
 end
 
-
 answer_key = generate_answer_key fixed_board
 
-puts answer_key
+puts answer_key # REMOVE
 
-# until matches == 6
+until matches == 6
 
-puts print_board fixed_board
+  puts "Choose a letter: "
 
-puts "Choose a letter: "
+  choice1 = gets.chomp.upcase
 
-choice1 = gets.chomp.upcase
+  temp_board[temp_board.index(choice1)] = answer_key[choice1]
 
-temp_board[temp_board.index(choice1)] = answer_key[choice1]
+  puts "Choose another letter: "
 
-puts "Choose another letter: "
+  choice2 = gets.chomp.upcase
 
-choice2 = gets.chomp.upcase
+  temp_board[temp_board.index(choice2)] = answer_key[choice2]
 
-temp_board[temp_board.index(choice2)] = answer_key[choice2]
-
-puts print_board temp_board
-# if answer_key[choice1] != answer_key[choice2]
-#   print_board temp_board
-#   puts "No match! Try again."
-#   print_board fixed_board
-# else
-#   puts "You found a match!"
-#   print_board = print_board temp_board
-#   puts print_board
-#   matches += 1
-# end
-#
-# end
+  if answer_key[choice1] != answer_key[choice2]
+    print_board temp_board
+    puts "No match! Try again."
+    print_board fixed_board
+  else
+    puts "You found a match!"
+    fixed_board[fixed_board.index(choice1)] = answer_key[choice1]
+    fixed_board[fixed_board.index(choice2)] = answer_key[choice2]
+    print_board fixed_board
+    matches += 1
+  end
+end
