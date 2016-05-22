@@ -1,27 +1,41 @@
 require "pry"
 
-attempts = 20
+attempts = 7
 matches = 0
 
-start_board = ("A".."L").to_a
-temp_board = ("A".."L").to_a
-correct_answers_board = ("A".."L").to_a
+def select_level
+  print "Choose a level: E for easy, M for medium, or H for hard: "
+  level = gets.chomp.downcase
+  if level == "e"
+    "H"
+  elsif level == "m"
+    "L"
+  elsif level == "h"
+    "P"
+  else
+    puts "Please enter E, M, or H: "
+  end
+end
+
+level = select_level
+
+start_board = ("A"..level).to_a
+temp_board = ("A"..level).to_a
+correct_answers_board = ("A"..level).to_a
 
 def generate_answer_key start_board
-  range = (1..6).to_a
+  range = (1..(start_board.count / 2)).to_a
   number_key = (range * 2).shuffle
   Hash[start_board.zip(number_key)]
 end
 
 def print_board board
+  x = 0
+  until x > (board.count - 1) do
+  x.upto(x+3) { |i| print board[i], " " }
   puts
-  print board[0..3].join(" ")
-  puts
-  print board[4..7].join(" ")
-  puts
-  print board[8..11].join(" ")
-  puts
-  puts
+  x += 4
+  end
 end
 
 print_board correct_answers_board
@@ -42,7 +56,11 @@ until matches == 6 || attempts == 0
 
   if choice1.to_i != 0 || choice2.to_i != 0
 
-    puts "Enter two valid LETTERS A-L please."
+    puts "Enter two valid LETTERS please."
+
+  elsif choice1.split.count > 1 || choice2.split.count > 1
+
+    puts "Enter only ONE letter."
 
   elsif correct_answers_board.include?(choice1) == false || correct_answers_board.include?(choice2) == false
 
@@ -68,5 +86,11 @@ until matches == 6 || attempts == 0
   end
   print_board correct_answers_board
 
-  # binding.pry
+  binding.pry
+end
+
+if matches == 6
+  print "You Win!"
+else
+  puts "You Lose!"
 end
