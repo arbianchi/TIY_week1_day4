@@ -86,12 +86,9 @@ until matches == start_board.count / 2 || attempts == 0
 
   end
   print_board correct_answers_board
-  if matches == 5
-    binding.pry
-  end
 end
 
-if start_board.count / 2
+if matches == start_board.count / 2
   puts "You Win!"
 else
   puts "You Lose!"
