@@ -1,7 +1,6 @@
 require "pry"
 
-attempts = 7
-matches = 0
+# Uncomment line 46 to test run with answer key
 
 def select_level
   print "Choose a level: E for easy, M for medium, or H for hard: "
@@ -22,6 +21,8 @@ level = select_level
 start_board = ("A"..level).to_a
 temp_board = ("A"..level).to_a
 correct_answers_board = ("A"..level).to_a
+attempts = (start_board.count / 2) * 2
+matches = 0
 
 def generate_answer_key start_board
   range = (1..(start_board.count / 2)).to_a
@@ -42,9 +43,9 @@ print_board correct_answers_board
 
 answer_key = generate_answer_key start_board
 
-puts answer_key # REMOVE
+# puts answer_key # REMOVE
 
-until matches == 6 || attempts == 0
+until matches == start_board.count / 2 || attempts == 0
 
   temp_board = correct_answers_board.clone
 
@@ -85,12 +86,13 @@ until matches == 6 || attempts == 0
 
   end
   print_board correct_answers_board
-
-  binding.pry
+  if matches == 5
+    binding.pry
+  end
 end
 
-if matches == 6
-  print "You Win!"
+if start_board.count / 2
+  puts "You Win!"
 else
   puts "You Lose!"
 end
